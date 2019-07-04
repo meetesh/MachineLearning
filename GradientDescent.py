@@ -14,9 +14,12 @@ def gradientDescent(X,y,theta,alpha,iterations):
  m = y.shape[0] 
  for i in range(iterations):
   h = X @ theta
-  temp1 = theta[0] - (alpha * (1/m) * np.sum((h-y)*(X[:,0].reshape(m,1))))
-  temp2 = theta[1] - (alpha * (1/m) * np.sum((h-y)*(X[:,1].reshape(m,1))))
-  theta = np.vstack([temp1,temp2])
+  # non vectorized Code
+  #temp1 = theta[0] - (alpha * (1/m) * np.sum((h-y)*(X[:,0].reshape(m,1))))
+  #temp2 = theta[1] - (alpha * (1/m) * np.sum((h-y)*(X[:,1].reshape(m,1))))
+  #theta = np.vstack([temp1,temp2])
+  # vectorized Code 
+  theta = theta - (alpha * (1/m) * ((h-y).transpose() @ X).transpose());
  return theta
 
 def main():
