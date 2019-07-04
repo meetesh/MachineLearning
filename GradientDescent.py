@@ -8,8 +8,16 @@ def computeCost(X,y,theta):
  hypothesis = X @ theta 
  t = np.sum(((hypothesis-y))**2) 
  J = (1/(2*m)) * t
-
  return J
+
+def gradientDescent(X,y,theta,alpha,iterations):
+ m = y.shape[0] 
+ for i in range(iterations):
+  h = X @ theta
+  temp1 = theta[0] - (alpha * (1/m) * np.sum((h-y)*(X[:,0].reshape(m,1))))
+  temp2 = theta[1] - (alpha * (1/m) * np.sum((h-y)*(X[:,1].reshape(m,1))))
+  theta = np.vstack([temp1,temp2])
+ return theta
 
 def main():
  #get the input from file
@@ -30,8 +38,14 @@ def main():
  print("Testing the cost function....")
  J = computeCost(X,y,theta)
  print("The cost function return value is %f and expected is 32.07(approx)"%J)
- 
- 
+
+ #try run iteration with gradient descent algorithm  
+ iterations = 1500;
+ alpha = 0.01;
+ print("Running Gradient Descent.....")
+ theta = gradientDescent(X, y, theta, alpha, iterations);
+ print("Theta found by gradient descent is \n",theta);
+ print("Expected value is -3.6303 and 1.1664")
  return
 
 def plotData(x,y):
