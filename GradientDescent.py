@@ -1,6 +1,8 @@
 import numpy as np
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
+from  mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
 
 def computeCost(X,y,theta):
  m = y.size
@@ -49,6 +51,22 @@ def main():
  theta = gradientDescent(X, y, theta, alpha, iterations);
  print("Theta found by gradient descent is \n",theta);
  print("Expected value is -3.6303 and 1.1664")
+ plt.plot(X[:,1],X @ theta)
+ plotData(X[:,1],y)
+
+ #plotting the cost computation graph
+ theta0_vals = np.linspace(-10,10,100)
+ theta1_vals = np.linspace(-1,4,100)
+ J_vals = np.zeros([theta0_vals.size,theta1_vals.size])
+ for i in range(theta0_vals.size):
+  for j in range(theta1_vals.size):
+   t = np.array([[theta0_vals[i]],[theta1_vals[j]]])
+   J_vals[i,j] = computeCost(X,y,t)
+ J_vals = J_vals.transpose(); 
+ fig = plt.figure();
+ ax = fig.gca(projection='3d')
+ surf = ax.plot_surface(theta0_vals.reshape(100), theta1_vals.reshape(100), J_vals.reshape(100,100), cmap=cm.coolwarm)
+ plt.show();
  return
 
 def plotData(x,y):
