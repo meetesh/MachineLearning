@@ -63,14 +63,19 @@ def main():
    t = np.array([[theta0_vals[i]],[theta1_vals[j]]])
    J_vals[i,j] = computeCost(X,y,t)
  J_vals = J_vals.transpose(); 
- fig = plt.figure();
- ax = fig.gca(projection='3d')
- surf = ax.plot_surface(theta0_vals.reshape(100), theta1_vals.reshape(100), J_vals.reshape(100,100), cmap=cm.coolwarm)
- plt.show();
+ pX,pY = np.meshgrid(theta0_vals,theta1_vals)
+ plot3d(pX,pY,J_vals)
  return
 
 def plotData(x,y):
  plt.plot(x,y,'bx',linewidth=0)
+ plt.show()
+ return
+
+def plot3d(x,y,z):
+ fig = plt.figure()
+ ax = fig.gca(projection='3d')
+ ax.plot_surface(x,y,z,cmap=cm.coolwarm)
  plt.show()
  return
 
